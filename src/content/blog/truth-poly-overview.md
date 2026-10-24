@@ -1,7 +1,8 @@
 ---
 title: "Truth-Poly: an automated pipeline that trades Trump's Truth Social posts"
 description: 'How a pipeline watches Truth Social and trades Polymarket within 2-3 seconds.'
-author: 'Mia Gavin'
+author: mia-gavin
+tags: ['truth-poly', 'architecture']
 pubDate: 'Oct 24 2026'
 ---
 
