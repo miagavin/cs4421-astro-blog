@@ -1,5 +1,6 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { type CollectionEntry, getCollection, getEntry, render } from 'astro:content';
+import AuthorBio from '../../components/AuthorBio.astro';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
@@ -13,8 +14,10 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+const author = await getEntry(post.data.author);
 ---
 
 <BlogPost {...post.data}>
 	<Content />
+	{author && <AuthorBio author={author} />}
 </BlogPost>
