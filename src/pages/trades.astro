@@ -1,0 +1,90 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+const title = 'My Trades';
+const description =
+	'The trade Truth-Poly made on the Fed Chair market, and how the pipeline works.';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				text-align: left;
+			}
+			.notice {
+				margin-top: 2em;
+				padding: 1em;
+				border-left: 4px solid var(--accent);
+				background: rgb(var(--gray-light));
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>My Trades</h1>
+			<p>
+				This page explains the trade Truth-Poly made and how the pipeline works. The full code is
+				on <a href="https://github.com/miagavin/truth-poly-ise">GitHub</a>.
+			</p>
+
+			<h2>The Kevin Warsh trade</h2>
+			<p>
+				At the end of January 2026, Donald Trump announced on Truth Social that Kevin Warsh was his
+				pick for Fed Chair. Truth-Poly saw the post, worked out that it was a nomination, and bought
+				Yes on Warsh in Polymarket's Fed Chair market at about 95 cents a share.
+			</p>
+			<p>
+				A Yes share pays $1.00 if the outcome is Yes, so buying at 95 cents is a return of about
+				5%. A few minutes later the price settled around 99.7 cents, once slower traders had
+				reacted to the announcement.
+			</p>
+
+			<h2>Why there was an edge</h2>
+			<p>
+				I found the edge by comparing two timestamps: when Trump posted about calling off tariffs
+				on European countries, and when the market actually moved. The market took a minute or more
+				to react, because the traders who made money were doing it by hand. Truth-Poly acts within
+				2-3 seconds of a post, so it can trade before the price catches up.
+			</p>
+
+			<h2>How the pipeline works</h2>
+			<ol>
+				<li>
+					<strong>Poll.</strong> It checks Trump's Truth Social account every 1000ms.
+				</li>
+				<li>
+					<strong>Filter.</strong> Each post goes through a keyword filter, so only posts that
+					might matter go further.
+				</li>
+				<li>
+					<strong>Classify.</strong> Claude reads the post and answers with the nominee's name, or
+					"No nomination".
+				</li>
+				<li>
+					<strong>Route.</strong> A router maps the name to Polymarket markets and buys the right
+					asset. A malformed or unclear answer never becomes a trade.
+				</li>
+			</ol>
+			<p>
+				Each step has its own post on the <a href="/blog">blog</a>, and the code is on
+				<a href="https://github.com/miagavin/truth-poly-ise">GitHub</a>.
+			</p>
+
+			<p class="notice">
+				<strong>Not financial advice.</strong> This is a personal project and a learning log.
+				Prediction markets can lose you money; never risk more than you can afford to lose.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
