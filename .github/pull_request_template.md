@@ -4,7 +4,7 @@
 ## Changes
 -
 
-## Closess
+## Closes
 Fixes #
 
 ## Definition of Done
