@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry, render } from 'astro:content';
+
+interface Props {
+	author: CollectionEntry<'authors'>;
+}
+
+const { author } = Astro.props;
+const { name, role, avatar, avatarAlt, links } = author.data;
+const { Content } = await render(author);
+const initials = name
+	.split(' ')
+	.map((part) => part[0])
+	.join('')
+	.slice(0, 2)
+	.toUpperCase();
+---
+
+<aside class="author-bio" aria-label="About the author">
+	{
+		avatar ? (
+			<Image src={avatar} alt={avatarAlt ?? `Photo of ${name}`} width={72} height={72} class="avatar" />
+		) : (
+			<div class="avatar initials" aria-hidden="true">
+				{initials}
+			</div>
+		)
+	}
+	<div>
+		<p class="name">{name}</p>
+		<p class="role">{role}</p>
+		<div class="bio"><Content /></div>
+		{
+			links.length > 0 && (
+				<p class="links">
+					{links.map((link) => (
+						<a href={link.url} rel="noopener">
+							{link.label}
+						</a>
+					))}
+				</p>
+			)
+		}
+	</div>
+</aside>
+
+<style>
+	.author-bio {
+		display: flex;
+		gap: 1em;
+		margin-top: 3em;
+		padding-top: 1.5em;
+		border-top: 1px solid rgb(var(--gray-light));
+		text-align: left;
+	}
+	.avatar {
+		flex: none;
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.initials {
+		display: grid;
+		place-items: center;
+		background: var(--accent);
+		color: white;
+		font-weight: 700;
+	}
+	.name {
+		margin: 0;
+		font-weight: 700;
+	}
+	.role {
+		margin: 0 0 0.5em;
+		color: rgb(var(--gray));
+	}
+	.bio :global(p) {
+		margin: 0 0 0.5em;
+	}
+	.links a {
+		margin-right: 1em;
+	}
+</style>
