@@ -61,3 +61,34 @@ Check out [our documentation](https://docs.astro.build) or jump into our [Discor
 ## Credit
 
 This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+
+## Running the SSR server locally
+
+The site builds as a Node server (see [ADR-001](docs/adr/ADR-001-transition-to-ssr-and-containers.md)).
+
+```bash
+npm run build
+HOST=0.0.0.0 PORT=4321 node ./dist/server/entry.mjs
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:HOST="0.0.0.0"; $env:PORT="4321"; node .\dist\server\entry.mjs
+```
+
+Check that it is healthy:
+
+```bash
+curl -i http://localhost:4321/api/health
+```
+
+Expected: `HTTP/1.1 200 OK` with a JSON body containing `status`, `uptime` and `timestamp`.
+
+Every request is logged to stdout as one JSON line, for example:
+
+```json
+{"timestamp":"2026-10-26T12:00:00.000Z","level":"INFO","route":"/api/health","method":"GET","statusCode":200,"latencyMs":3}
+```
+
+Levels are `INFO` for 2xx/3xx, `WARN` for 4xx and `ERROR` for 5xx.
