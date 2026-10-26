@@ -1,8 +1,9 @@
 name: Deploy Static Site
 
+# Paused: the app now builds as an SSR server (see docs/adr/ADR-001), so an
+# automatic upload of dist/ to S3 would break the live static site.
+# Run manually only, until the container deployment replaces it.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
